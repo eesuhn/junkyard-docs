@@ -1,0 +1,61 @@
+openapi: 3.1.0
+info:
+  title: Junkyard
+  version: 1.0.0
+  description: Core Junkyard API
+servers:
+  - url: https://junkyard.fly.dev
+paths:
+  /loops/shyusd-hyusd:
+    get:
+      summary: Get Loop APY for sHYUSD/hyUSD
+      description: Calculate net APY for a leveraged loop strategy using sHYUSD as collateral and hyUSD as principal
+      operationId: get-loops-shyusd-hyusd
+      x-mint:
+        href: /reference/get-loops-shyusd-hyusd
+      tags:
+        - Loopscale
+      parameters:
+        - name: leverage
+          in: query
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: 1.0
+            maximum: 9.0
+            default: 1.0
+          description: Leverage factor between 1.0 and 9.0
+      responses:
+        "200":
+          description: Successfully calculated loop APY
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - name
+                  - net_apy
+                  - base_apy
+                  - borrow_apy
+                properties:
+                  name:
+                    type: string
+                    description: Name of the loop strategy
+                  net_apy:
+                    type: number
+                    format: float
+                    description: Net APY after accounting for leverage and borrowing costs
+                  base_apy:
+                    type: number
+                    format: float
+                    description: Base APY from the collateral asset
+                  borrow_apy:
+                    type: number
+                    format: float
+                    description: APY cost of borrowing the principal asset
+              example:
+                name: sHYUSD/hyUSD
+                net_apy: 25.0682
+                base_apy: 13.6224
+                borrow_apy: 12.0
