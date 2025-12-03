@@ -6,15 +6,15 @@ info:
 servers:
   - url: https://junkyard.fly.dev
 paths:
-  /loops/shyusd-hyusd:
+  /loopscale/loops/shyusd-hyusd:
     get:
       summary: Get Loop APY for sHYUSD/hyUSD
-      description: Calculate net APY for a leveraged loop strategy using sHYUSD as collateral and hyUSD as principal
+      description: Get net APY for a leveraged loop strategy using sHYUSD as collateral and hyUSD as principal
       operationId: get-loops-shyusd-hyusd
       x-mint:
         href: /reference/get-loops-shyusd-hyusd
       tags:
-        - Loopscale
+        - Loopscale (Loop)
       parameters:
         - name: leverage
           in: query
