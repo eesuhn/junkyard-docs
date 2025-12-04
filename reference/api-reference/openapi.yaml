@@ -61,8 +61,6 @@ paths:
                 net_apy: 25.068267
                 base_apy: 13.622467
                 borrow_apy: 12.0
-        "401":
-          description: Invalid or missing API key
 components:
   securitySchemes:
     ApiKeyAuth:
