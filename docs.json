@@ -1,9 +1,12 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "name": "Junkyard.",
-  "theme": "linden",
+  "theme": "maple",
   "colors": {
-    "primary": "#EC6238"
+    "primary": "#EC6248"
+  },
+  "fonts": {
+    "family": "JetBrains Mono"
   },
   "favicon": "/favicon.svg",
   "navigation": {
