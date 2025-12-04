@@ -5,6 +5,8 @@ info:
   description: Core Junkyard API
 servers:
   - url: https://junkyard.fly.dev
+security:
+  - ApiKeyAuth: []
 paths:
   /loopscale/loop/shyusd-hyusd:
     get:
@@ -59,3 +61,11 @@ paths:
                 net_apy: 25.068267
                 base_apy: 13.622467
                 borrow_apy: 12.0
+        "401":
+          description: Invalid or missing API key
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
