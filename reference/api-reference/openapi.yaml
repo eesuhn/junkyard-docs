@@ -11,7 +11,7 @@ paths:
   /loopscale/loop/markets:
     get:
       summary: Loop Markets (Loop ID)
-      description: Fetch all loop markets or perform a fuzzy search by name
+      description: Fetch all loop markets or perform a fuzzy search by name, from Loopscale
       operationId: get-loop-markets
       x-mint:
         href: /reference/get-loop-markets
@@ -66,7 +66,7 @@ paths:
   /loopscale/loop/apy:
     get:
       summary: Loop APY by ID
-      description: Get net APY for a leveraged loop strategy for any loop market
+      description: Get net APY for any leveraged loop strategy from Loopscale by loop ID
       operationId: get-loop-apy
       x-mint:
         href: /reference/get-loop-apy
