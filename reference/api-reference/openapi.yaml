@@ -63,6 +63,14 @@ paths:
                   name: sHYUSD / USDC
                   collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
                   principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+                - loop_id: shyusd-hyusd
+                  name: sHYUSD / hyUSD
+                  collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
+                  principal_mint: 5YMkXAYccHSGnHn9nob9xEvv6Pvka9DZWH7nTbotTu9E
+                - loop_id: usdstar-2506-usdc
+                  name: "[Closed] PT-USD*-2506 / USDC"
+                  collateral_mint: F3GhNdzjguv1gkh5ZN8DGTydkHJ4gDjokQkeMg6u97mu
+                  principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
   /loopscale/loop/apy:
     get:
       summary: Loop APY by ID
