@@ -8,16 +8,78 @@ servers:
 security:
   - ApiKeyAuth: []
 paths:
-  /loopscale/loop/shyusd-hyusd:
+  /loopscale/loop/markets:
     get:
-      summary: Get Loop APY for sHYUSD/hyUSD
-      description: Get net APY for a leveraged loop strategy using sHYUSD as collateral and hyUSD as principal
-      operationId: get-loop-shyusd-hyusd
+      summary: Loop Markets (Loop ID)
+      description: Fetch all loop markets or perform a fuzzy search by name
+      operationId: get-loop-markets
       x-mint:
-        href: /reference/get-loop-shyusd-hyusd
+        href: /reference/get-loop-markets
       tags:
         - Loopscale (Loop)
       parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional name to perform fuzzy search (case-insensitive)
+        - name: include_closed
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include closed markets
+      responses:
+        "200":
+          description: Successfully fetched loop markets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - loop_id
+                    - name
+                    - collateral_mint
+                    - principal_mint
+                  properties:
+                    loop_id:
+                      type: string
+                      description: Loop market identifier
+                    name:
+                      type: string
+                      description: Display name of the loop market
+                    collateral_mint:
+                      type: string
+                      description: Solana mint address of the collateral token
+                    principal_mint:
+                      type: string
+                      description: Solana mint address of the principal token
+              example:
+                - loop_id: shyusd-usdc
+                  name: sHYUSD / USDC
+                  collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
+                  principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+  /loopscale/loop/apy:
+    get:
+      summary: Loop APY by ID
+      description: Get net APY for a leveraged loop strategy for any loop market
+      operationId: get-loop-apy
+      x-mint:
+        href: /reference/get-loop-apy
+      tags:
+        - Loopscale (Loop)
+      parameters:
+        - name: loop_id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Loopscale loop market ID
+          example: shyusd-hyusd
         - name: leverage
           in: query
           required: false
@@ -28,6 +90,13 @@ paths:
             maximum: 9.0
             default: 1.0
           description: Leverage factor between 1.0 and 9.0
+        - name: include_mint_addrs
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include mint addresses
       responses:
         "200":
           description: Successfully calculated loop APY
@@ -36,14 +105,18 @@ paths:
               schema:
                 type: object
                 required:
+                  - loop_id
                   - name
                   - net_apy
                   - base_apy
                   - borrow_apy
                 properties:
+                  loop_id:
+                    type: string
+                    description: Loop market identifier
                   name:
                     type: string
-                    description: Name of the loop strategy
+                    description: Display name of the loop strategy
                   net_apy:
                     type: number
                     format: float
@@ -56,80 +129,25 @@ paths:
                     type: number
                     format: float
                     description: APY cost of borrowing the principal asset
+                  include:
+                    type: object
+                    description: Additional data
+                    properties:
+                      collateral_mint:
+                        type: string
+                        description: Solana mint address of the collateral token
+                      principal_mint:
+                        type: string
+                        description: Solana mint address of the principal token
               example:
-                name: sHYUSD/hyUSD
+                loop_id: shyusd-hyusd
+                name: sHYUSD / hyUSD
                 net_apy: 25.068267
                 base_apy: 13.622467
                 borrow_apy: 12.0
-  /loopscale/loop/markets:
-    post:
-      summary: Get Loop Markets on Loopscale
-      description: Get all loop markets or perform a fuzzy search by name on Loopscale
-      operationId: post-loop-markets
-      x-mint:
-        href: /reference/post-loop-markets
-      tags:
-        - Loopscale (Loop)
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: Optional name to perform fuzzy search (case-insensitive), e.g. `USDC`
-      responses:
-        "200":
-          description: Successfully fetched loop markets
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  required:
-                    - id
-                    - loop_id
-                    - name
-                    - collateral_mint
-                    - principal_mint
-                    - created_at
-                    - updated_at
-                  properties:
-                    id:
-                      type: string
-                      format: uuid
-                      description: Unique identifier for the market record
-                    loop_id:
-                      type: string
-                      description: Loop market identifier on Loopscale
-                    name:
-                      type: string
-                      description: Display name of the loop market
-                    collateral_mint:
-                      type: string
-                      description: Solana mint address of the collateral token
-                    principal_mint:
-                      type: string
-                      description: Solana mint address of the principal token
-                    created_at:
-                      type: string
-                      format: date-time
-                      description: Timestamp when the record was created
-                    updated_at:
-                      type: string
-                      format: date-time
-                      description: Timestamp when the record was last updated
-              example:
-                - id: 662d24ae-7f4d-4a18-b6dd-801a836a294a
-                  loop_id: shyusd-usdc
-                  name: sHYUSD / USDC
+                include:
                   collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
-                  principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
-                  created_at: "2025-12-07T17:36:43.833334+00:00"
-                  updated_at: "2025-12-07T17:36:43.833334+00:00"
+                  principal_mint: 5YMkXAYccHSGnHn9nob9xEvv6Pvka9DZWH7nTbotTu9E
 components:
   securitySchemes:
     ApiKeyAuth:
