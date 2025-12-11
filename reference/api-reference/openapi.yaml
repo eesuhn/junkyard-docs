@@ -31,46 +31,73 @@ paths:
             type: boolean
             default: false
           description: Whether to include closed markets
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+          description: Number of results to return per page
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Cursor for pagination (loop_id to start after)
       responses:
         "200":
           description: Successfully fetched loop markets
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  required:
-                    - loop_id
-                    - name
-                    - collateral_mint
-                    - principal_mint
-                  properties:
-                    loop_id:
-                      type: string
-                      description: Loop market identifier
-                    name:
-                      type: string
-                      description: Display name of the loop market
-                    collateral_mint:
-                      type: string
-                      description: Solana mint address of the collateral token
-                    principal_mint:
-                      type: string
-                      description: Solana mint address of the principal token
+                type: object
+                required:
+                  - data
+                  - next_cursor
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - loop_id
+                        - name
+                        - collateral_mint
+                        - principal_mint
+                      properties:
+                        loop_id:
+                          type: string
+                          description: Loop market identifier
+                        name:
+                          type: string
+                          description: Display name of the loop market
+                        collateral_mint:
+                          type: string
+                          description: Solana mint address of the collateral token
+                        principal_mint:
+                          type: string
+                          description: Solana mint address of the principal token
+                  next_cursor:
+                    type: string
+                    nullable: true
+                    description: Cursor for next page (null if no more results)
               example:
-                - loop_id: shyusd-usdc
-                  name: sHYUSD / USDC
-                  collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
-                  principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
-                - loop_id: shyusd-hyusd
-                  name: sHYUSD / hyUSD
-                  collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
-                  principal_mint: 5YMkXAYccHSGnHn9nob9xEvv6Pvka9DZWH7nTbotTu9E
-                - loop_id: usdstar-2506-usdc
-                  name: "[Closed] PT-USD*-2506 / USDC"
-                  collateral_mint: F3GhNdzjguv1gkh5ZN8DGTydkHJ4gDjokQkeMg6u97mu
-                  principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+                data:
+                  - loop_id: shyusd-usdc
+                    name: sHYUSD / USDC
+                    collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
+                    principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+                  - loop_id: shyusd-hyusd
+                    name: sHYUSD / hyUSD
+                    collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
+                    principal_mint: 5YMkXAYccHSGnHn9nob9xEvv6Pvka9DZWH7nTbotTu9E
+                  - loop_id: usdstar-2506-usdc
+                    name: "[Closed] PT-USD*-2506 / USDC"
+                    collateral_mint: F3GhNdzjguv1gkh5ZN8DGTydkHJ4gDjokQkeMg6u97mu
+                    principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+                next_cursor: usdstar-2506-usdc
   /loopscale/loop/apy:
     get:
       summary: Loop APY by ID
