@@ -52,52 +52,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - data
-                  - next_cursor
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      required:
-                        - loop_id
-                        - name
-                        - collateral_mint
-                        - principal_mint
-                      properties:
-                        loop_id:
-                          type: string
-                          description: Loop market identifier
-                        name:
-                          type: string
-                          description: Display name of the loop market
-                        collateral_mint:
-                          type: string
-                          description: Solana mint address of the collateral token
-                        principal_mint:
-                          type: string
-                          description: Solana mint address of the principal token
-                  next_cursor:
-                    type: string
-                    nullable: true
-                    description: Cursor for next page (null if no more results)
-              example:
-                data:
-                  - loop_id: shyusd-usdc
-                    name: sHYUSD / USDC
-                    collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
-                    principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
-                  - loop_id: shyusd-hyusd
-                    name: sHYUSD / hyUSD
-                    collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
-                    principal_mint: 5YMkXAYccHSGnHn9nob9xEvv6Pvka9DZWH7nTbotTu9E
-                  - loop_id: usdstar-2506-usdc
-                    name: "[Closed] PT-USD*-2506 / USDC"
-                    collateral_mint: F3GhNdzjguv1gkh5ZN8DGTydkHJ4gDjokQkeMg6u97mu
-                    principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
-                next_cursor: usdstar-2506-usdc
+                $ref: "#/components/schemas/GetLoopMarkets"
   /loopscale/loop/apy:
     get:
       summary: Loop APY by ID
@@ -138,54 +93,104 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - loop_id
-                  - name
-                  - net_apy
-                  - base_apy
-                  - borrow_apy
-                properties:
-                  loop_id:
-                    type: string
-                    description: Loop market identifier
-                  name:
-                    type: string
-                    description: Display name of the loop strategy
-                  net_apy:
-                    type: number
-                    format: float
-                    description: Net APY after accounting for leverage and borrowing costs
-                  base_apy:
-                    type: number
-                    format: float
-                    description: Base APY from the collateral asset
-                  borrow_apy:
-                    type: number
-                    format: float
-                    description: APY cost of borrowing the principal asset
-                  include:
-                    type: object
-                    description: Additional data
-                    properties:
-                      collateral_mint:
-                        type: string
-                        description: Solana mint address of the collateral token
-                      principal_mint:
-                        type: string
-                        description: Solana mint address of the principal token
-              example:
-                loop_id: shyusd-hyusd
-                name: sHYUSD / hyUSD
-                net_apy: 25.068267
-                base_apy: 13.622467
-                borrow_apy: 12.0
-                include:
-                  collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
-                  principal_mint: 5YMkXAYccHSGnHn9nob9xEvv6Pvka9DZWH7nTbotTu9E
+                $ref: "#/components/schemas/GetLoopAPY"
 components:
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
       name: x-api-key
+  schemas:
+    GetLoopMarkets:
+      type: object
+      required:
+        - data
+        - next_cursor
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            required:
+              - loop_id
+              - name
+              - collateral_mint
+              - principal_mint
+            properties:
+              loop_id:
+                type: string
+                description: Loop market identifier
+              name:
+                type: string
+                description: Display name of the loop market
+              collateral_mint:
+                type: string
+                description: Solana mint address of the collateral token
+              principal_mint:
+                type: string
+                description: Solana mint address of the principal token
+        next_cursor:
+          type: string
+          nullable: true
+          description: Cursor for next page (null if no more results)
+      example:
+        data:
+          - loop_id: shyusd-usdc
+            name: sHYUSD / USDC
+            collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
+            principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+          - loop_id: shyusd-hyusd
+            name: sHYUSD / hyUSD
+            collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
+            principal_mint: 5YMkXAYccHSGnHn9nob9xEvv6Pvka9DZWH7nTbotTu9E
+          - loop_id: usdstar-2506-usdc
+            name: "[Closed] PT-USD*-2506 / USDC"
+            collateral_mint: F3GhNdzjguv1gkh5ZN8DGTydkHJ4gDjokQkeMg6u97mu
+            principal_mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+        next_cursor: usdstar-2506-usdc
+    GetLoopAPY:
+      type: object
+      required:
+        - loop_id
+        - name
+        - net_apy
+        - base_apy
+        - borrow_apy
+      properties:
+        loop_id:
+          type: string
+          description: Loop market identifier
+        name:
+          type: string
+          description: Display name of the loop strategy
+        net_apy:
+          type: number
+          format: float
+          description: Net APY after accounting for leverage and borrowing costs
+        base_apy:
+          type: number
+          format: float
+          description: Base APY from the collateral asset
+        borrow_apy:
+          type: number
+          format: float
+          description: APY cost of borrowing the principal asset
+        include:
+          type: object
+          description: Additional data
+          properties:
+            collateral_mint:
+              type: string
+              description: Solana mint address of the collateral token
+            principal_mint:
+              type: string
+              description: Solana mint address of the principal token
+      example:
+        loop_id: shyusd-hyusd
+        name: sHYUSD / hyUSD
+        net_apy: 25.068267
+        base_apy: 13.622467
+        borrow_apy: 12.0
+        include:
+          collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
+          principal_mint: 5YMkXAYccHSGnHn9nob9xEvv6Pvka9DZWH7nTbotTu9E
