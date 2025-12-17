@@ -13,7 +13,24 @@
     "tabs": [
       {
         "tab": "API Reference",
-        "openapi": "/reference/api-reference/openapi.yaml"
+        "groups": [
+          {
+            "group": "Loopscale",
+            "pages": [
+              "reference/loopscale",
+              "reference/loopscale/get-loop-apy",
+              "reference/loopscale/get-loop-markets"
+            ]
+          },
+          {
+            "group": "RateX",
+            "pages": [
+              "reference/ratex",
+              "reference/ratex/get-liquidity-apy",
+              "reference/ratex/get-liquidity-markets"
+            ]
+          }
+        ]
       }
     ]
   },
