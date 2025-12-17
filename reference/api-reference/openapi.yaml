@@ -96,7 +96,7 @@ paths:
                 $ref: "#/components/schemas/GetLoopAPY"
   /ratex/liquidity/markets:
     get:
-      summary: RateX Liquidity Markets
+      summary: RateX Markets (Liquidity ID)
       description: Fetch all liquidity markets or perform a fuzzy search by name, from RateX
       operationId: get-liquidity-markets
       x-mint:
