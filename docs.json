@@ -18,16 +18,16 @@
             "group": "Loopscale",
             "pages": [
               "reference/loopscale",
-              "reference/loopscale/get-loop-apy",
-              "reference/loopscale/get-loop-markets"
+              "reference/loopscale/get-loop-markets",
+              "reference/loopscale/get-loop-apy"
             ]
           },
           {
             "group": "RateX",
             "pages": [
               "reference/ratex",
-              "reference/ratex/get-liquidity-apy",
-              "reference/ratex/get-liquidity-markets"
+              "reference/ratex/get-liquidity-markets",
+              "reference/ratex/get-liquidity-apy"
             ]
           }
         ]
