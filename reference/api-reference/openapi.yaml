@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: Core Junkyard API
 servers:
-  - url: https://api.junkyard.cloud
+  - url: https://junkyard.fly.dev
 security:
   - ApiKeyAuth: []
 paths:
@@ -94,6 +94,68 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetLoopAPY"
+  /ratex/liquidity/markets:
+    get:
+      summary: RateX Liquidity Markets
+      description: Fetch all liquidity markets or perform a fuzzy search by name, from RateX
+      operationId: get-liquidity-markets
+      x-mint:
+        href: /reference/get-liquidity-markets
+      tags:
+        - RateX (Liquidity)
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional name to perform fuzzy search (case-insensitive)
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+          description: Number of results to return per page
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Cursor for pagination (liq_id to start after)
+      responses:
+        "200":
+          description: Successfully fetched liquidity markets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetLiquidityMarkets"
+  /ratex/liquidity/apy:
+    get:
+      summary: Liquidity APY by ID
+      description: Get APY breakdown for any RateX liquidity market by liquidity ID
+      operationId: get-liquidity-apy
+      x-mint:
+        href: /reference/get-liquidity-apy
+      tags:
+        - RateX (Liquidity)
+      parameters:
+        - name: liq_id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: RateX liquidity ID
+          example: xSOL-2601
+      responses:
+        "200":
+          description: Successfully calculated liquidity APY
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetLiquidityAPY"
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -194,3 +256,69 @@ components:
         include:
           collateral_mint: HnnGv3HrSqjRpgdFmx7vQGjntNEoex1SU4e9Lxcxuihz
           principal_mint: 5YMkXAYccHSGnHn9nob9xEvv6Pvka9DZWH7nTbotTu9E
+    GetLiquidityMarkets:
+      type: object
+      required:
+        - data
+        - next_cursor
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            required:
+              - liq_id
+              - market_indicator
+            properties:
+              liq_id:
+                type: string
+                description: Liquidity market identifier
+              market_indicator:
+                type: string
+                description: Market indicator symbol
+        next_cursor:
+          type: string
+          nullable: true
+          description: Cursor for next page (null if no more results)
+      example:
+        data:
+          - liq_id: xSOL-2601
+            market_indicator: XSOL
+          - liq_id: bbSOL-2412
+            market_indicator: BBSOL
+          - liq_id: sUSD-2506
+            market_indicator: SUSD
+        next_cursor: sUSD-2506
+    GetLiquidityAPY:
+      type: object
+      required:
+        - liq_id
+        - market_indicator
+        - implied_apy
+        - base_apy
+        - points_apy
+      properties:
+        liq_id:
+          type: string
+          description: Liquidity market identifier
+        market_indicator:
+          type: string
+          description: Market indicator symbol
+        implied_apy:
+          type: number
+          format: float
+          description: Total implied APY from RateX
+        base_apy:
+          type: number
+          format: float
+          description: Base APY excluding points
+        points_apy:
+          type: number
+          format: float
+          description: APY from points
+      example:
+        liq_id: xSOL-2601
+        market_indicator: XSOL
+        implied_apy: 29.9968627
+        base_apy: 23.3531
+        points_apy: 6.6437
