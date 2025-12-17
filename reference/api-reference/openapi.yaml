@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: Core Junkyard API
 servers:
-  - url: https://junkyard.fly.dev
+  - url: https://api.junkyard.cloud
 security:
   - ApiKeyAuth: []
 paths:
