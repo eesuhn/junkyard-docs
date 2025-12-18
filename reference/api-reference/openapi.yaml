@@ -13,8 +13,8 @@ paths:
       summary: Loop Markets (Loop ID)
       description: Fetch all loop markets or perform a fuzzy search by name, from Loopscale
       operationId: get-loop-markets
-      x-mint:
-        href: /reference/get-loop-markets
+      # x-mint:
+      #   href: /reference/get-loop-markets
       tags:
         - Loopscale (Loop)
       parameters:
@@ -58,8 +58,8 @@ paths:
       summary: Loop APY by ID
       description: Get net APY for any leveraged loop strategy from Loopscale by loop ID
       operationId: get-loop-apy
-      x-mint:
-        href: /reference/get-loop-apy
+      # x-mint:
+      #   href: /reference/get-loop-apy
       tags:
         - Loopscale (Loop)
       parameters:
@@ -99,8 +99,8 @@ paths:
       summary: RateX Markets (Liquidity ID)
       description: Fetch all liquidity markets or perform a fuzzy search by name, from RateX
       operationId: get-liquidity-markets
-      x-mint:
-        href: /reference/get-liquidity-markets
+      # x-mint:
+      #   href: /reference/get-liquidity-markets
       tags:
         - RateX (Liquidity)
       parameters:
@@ -137,8 +137,8 @@ paths:
       summary: Liquidity APY by ID
       description: Get APY breakdown for any RateX liquidity market by liquidity ID
       operationId: get-liquidity-apy
-      x-mint:
-        href: /reference/get-liquidity-apy
+      # x-mint:
+      #   href: /reference/get-liquidity-apy
       tags:
         - RateX (Liquidity)
       parameters:
