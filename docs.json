@@ -40,7 +40,13 @@
       "view"
     ]
   },
-  "navbar": {},
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Connect with Team",
+      "href": "https://eesuhn.github.io/eesuhn/"
+    }
+  },
   "footer": {
     "socials": {
       "x": "https://x.com/eesuhn",
