@@ -3,7 +3,9 @@
   "name": "Junkyard.",
   "theme": "maple",
   "colors": {
-    "primary": "#EC6248"
+    "primary": "#7A55FF",
+    "light": "#7A55FF",
+    "dark": "#272053"
   },
   "fonts": {
     "family": "JetBrains Mono"
@@ -39,6 +41,10 @@
       "copy",
       "view"
     ]
+  },
+  "banner": {
+    "content": "*[justsdk](https://pypi.org/project/justsdk).print_info('buidl something today')*",
+    "dismissible": true
   },
   "navbar": {
     "primary": {
