@@ -43,7 +43,7 @@
     ]
   },
   "banner": {
-    "content": "*[justsdk](https://pypi.org/project/justsdk).print_info('buidl something today')*",
+    "content": "*buidl something today.*",
     "dismissible": true
   },
   "navbar": {
