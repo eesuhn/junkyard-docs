@@ -1,4 +1,4 @@
-![](/static/banner.png)
+![](/static/doc-banner.png)
 
 **Check out [docs.junkyard.cloud](https://docs.junkyard.cloud/)**
 
