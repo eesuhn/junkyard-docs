@@ -10,12 +10,22 @@
   "fonts": {
     "family": "JetBrains Mono"
   },
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
+  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
         "tab": "API Reference",
         "groups": [
+          {
+            "group": " ",
+            "pages": [
+              "index"
+            ]
+          },
           {
             "group": "RateX",
             "pages": [
@@ -43,7 +53,7 @@
     ]
   },
   "banner": {
-    "content": "*buidl something today.*",
+    "content": "❃ *buidl something today* ❃",
     "dismissible": true
   },
   "navbar": {
