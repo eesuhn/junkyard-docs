@@ -10,7 +10,7 @@ security:
 paths:
   /loopscale/loop/markets:
     get:
-      summary: Loop Markets (Loop ID)
+      summary: Loop Markets (ID Map)
       description: Fetch all loop markets or perform a fuzzy search by name, from Loopscale
       operationId: get-loop-markets
       tags:
@@ -43,7 +43,7 @@ paths:
           required: false
           schema:
             type: string
-          description: Cursor for pagination (loop_id to start after)
+          description: Cursor for pagination (`loop_id` to start after)
       responses:
         "200":
           description: Successfully fetched loop markets
@@ -64,7 +64,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Loopscale loop market ID
+          description: "Loopscale loop market ID \n_from [`/loopscale/loop/markets`](/reference/loopscale/get-loop-markets)_"
           example: shyusd-hyusd
         - name: leverage
           in: query
@@ -92,8 +92,8 @@ paths:
                 $ref: "#/components/schemas/GetLoopAPY"
   /ratex/liquidity/markets:
     get:
-      summary: LP Markets (Liquidity ID)
-      description: Fetch all LP markets or perform a fuzzy search by name, from RateX
+      summary: Liquidity Markets (ID Map)
+      description: Fetch all liquidity markets or perform a fuzzy search by name, from RateX
       operationId: get-liquidity-markets
       tags:
         - RateX
@@ -118,7 +118,7 @@ paths:
           required: false
           schema:
             type: string
-          description: Cursor for pagination (liq_id to start after)
+          description: Cursor for pagination (`liq_id` to start after)
       responses:
         "200":
           description: Successfully fetched liquidity markets
@@ -128,8 +128,8 @@ paths:
                 $ref: "#/components/schemas/GetLiquidityMarkets"
   /ratex/liquidity/apy:
     get:
-      summary: LP APY by ID
-      description: Get APY breakdown for any RateX LP market by liquidity ID
+      summary: Liquidity APY by ID
+      description: Get APY breakdown for any RateX liquidity market by liquidity ID
       operationId: get-liquidity-apy
       tags:
         - RateX
@@ -139,7 +139,7 @@ paths:
           required: true
           schema:
             type: string
-          description: RateX liquidity ID
+          description: "RateX liquidity ID \n_from [`/ratex/liquidity/markets`](/reference/ratex/get-liquidity-markets)_"
           example: xSOL-2601
       responses:
         "200":
