@@ -57,10 +57,6 @@
       "view"
     ]
   },
-  "banner": {
-    "content": "❃ *buidl something today* ❃",
-    "dismissible": true
-  },
   "navbar": {
     "primary": {
       "type": "button",
